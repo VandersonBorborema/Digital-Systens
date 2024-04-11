@@ -1,0 +1,61 @@
+|somador_4bits
+Cout <= somador_completo:inst.Carry_out
+X[0] => somador_completo:inst3.A
+X[1] => somador_completo:inst2.A
+X[2] => somador_completo:inst1.A
+X[3] => somador_completo:inst.A
+Y[0] => somador_completo:inst3.B
+Y[1] => somador_completo:inst2.B
+Y[2] => somador_completo:inst1.B
+Y[3] => somador_completo:inst.B
+Cin => somador_completo:inst3.Carry_in
+S[0] <= somador_completo:inst3.Sum
+S[1] <= somador_completo:inst2.Sum
+S[2] <= somador_completo:inst1.Sum
+S[3] <= somador_completo:inst.Sum
+
+
+|somador_4bits|somador_completo:inst
+Carry_out <= inst2.DB_MAX_OUTPUT_PORT_TYPE
+Carry_in => inst1.IN0
+Carry_in => inst5.IN1
+A => inst4.IN0
+A => inst.IN1
+B => inst4.IN1
+B => inst.IN0
+Sum <= inst5.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|somador_4bits|somador_completo:inst1
+Carry_out <= inst2.DB_MAX_OUTPUT_PORT_TYPE
+Carry_in => inst1.IN0
+Carry_in => inst5.IN1
+A => inst4.IN0
+A => inst.IN1
+B => inst4.IN1
+B => inst.IN0
+Sum <= inst5.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|somador_4bits|somador_completo:inst2
+Carry_out <= inst2.DB_MAX_OUTPUT_PORT_TYPE
+Carry_in => inst1.IN0
+Carry_in => inst5.IN1
+A => inst4.IN0
+A => inst.IN1
+B => inst4.IN1
+B => inst.IN0
+Sum <= inst5.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|somador_4bits|somador_completo:inst3
+Carry_out <= inst2.DB_MAX_OUTPUT_PORT_TYPE
+Carry_in => inst1.IN0
+Carry_in => inst5.IN1
+A => inst4.IN0
+A => inst.IN1
+B => inst4.IN1
+B => inst.IN0
+Sum <= inst5.DB_MAX_OUTPUT_PORT_TYPE
+
+

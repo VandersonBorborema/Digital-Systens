@@ -1,0 +1,24 @@
+# do somador_4bits.do 
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# ** Warning: (vlog-6) -- Waiting for lock by "unknown". Lockfi# -- Compiling module somador_4bits
+# 
+# Top level modules:
+# 	somador# -- Compiling module somador_4bits
+# 
+# Top level modules:
+# 	somador_4bits
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module somador_4bits_vlg_sample_tst
+# -- Compiling module somador_4bits_vlg_check_tst
+# -- Compiling module somador_4b# vsim -L cycloneii_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L# vsim -L cycloneii_ver -L altera_ver -L altera_mf_ver -L # Loading work.somador_4bits_vlg_vec_tst
+# Loading work.somador_4bits
+## Loading work.somador_4bits_vlg_vec_# Loading cycloneii_ver.cycloneii_mux21
+# Loading cycloneii_ver.cycloneii_dffe
+# Loading cycloneii_ver.cycloneii_asynch_io
+# Loading cycloneii_ver.cycloneii_lcell_comb
+# Loading work.somador_4bit# Loading cycloneii_ver.cycloneii_lcell_comb
+# Loading work.somador_4bits_vlg_sample_tst
+# Loading work.s# Simulation passed !
+# ** Note: $finish    : somador_4bits.vt(232)
+#    Time: 1 us  Iteration: 0  Instance: /somador_4bits_vlg_vec_tst/tb_out
+  Time: 1 us  Iteration: 0  Instance: /somador_4bits_vlg_vec_tst/tb_out

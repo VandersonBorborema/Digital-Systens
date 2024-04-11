@@ -1,0 +1,81 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.0sp3\somador_4bits\simulation\qsim
+vsomador_4bits
+Z1 !s100 b4EPS7KWFG0f=8OR?Y<JW2
+Z2 I5Uoc^mXY]G>_YTWmhn1;K2
+Z3 VafbK>63UCjYjOMfU`nFN>1
+Z4 dC:\altera\13.0sp3\somador_4bits\simulation\qsim
+Z5 w1712794169
+Z6 8somador_4bits.vo
+Z7 Fsomador_4bits.vo
+L0 31
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s108 1712794178.209000
+Z10 !s90 -work|work|somador_4bits.vo|
+Z11 o-work work -O0
+!i10b 1
+!s85 0
+Z12 !s107 somador_4bits.vo|
+!s101 -O0
+vsomador_4bits_vlg_check_tst
+!i10b 1
+!s100 d1HhWOD8fAeGRm76c>IPD3
+ICL0;4AFE_He4hGo@@2DHZ3
+V1FD[Ra@X4Z6A4CP9`QTQD2
+R4
+Z13 w1712794168
+Z14 8somador_4bits.vt
+Z15 Fsomador_4bits.vt
+L0 61
+R8
+r1
+!s85 0
+31
+Z16 !s108 1712794179.575000
+Z17 !s107 somador_4bits.vt|
+Z18 !s90 -work|work|somador_4bits.vt|
+!s101 -O0
+R11
+vsomador_4bits_vlg_sample_tst
+!i10b 1
+!s100 7m><`_TK=6CfaDG[UXe`82
+IH;eClI8hU?Wll<f<^Fk1m3
+V;N`n`0YOe?Zn8BA:[IL<I1
+R4
+R13
+R14
+R15
+L0 29
+R8
+r1
+!s85 0
+31
+R16
+R17
+R18
+!s101 -O0
+R11
+vsomador_4bits_vlg_vec_tst
+!i10b 1
+!s100 >A@:J;NaM`J<7Bk2=PEF_3
+IATbocZk18=4dCGd72`B`M2
+VYPM9PWD^3jK56Eb1:eUGR1
+R4
+R13
+R14
+R15
+L0 236
+R8
+r1
+!s85 0
+31
+R16
+R17
+R18
+!s101 -O0
+R11
