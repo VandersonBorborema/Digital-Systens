@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity ALU is
+    Port (
+        A : in  STD_LOGIC_VECTOR(15 downto 0);
+        B : in  STD_LOGIC_VECTOR(15 downto 0);
+        Op : in  STD_LOGIC_VECTOR(2 downto 0);
+        Result : out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end ALU;
+
+architecture Behavioral of ALU is
+begin
+    process(A, B, Op)
+    begin
+        case Op is
+            when "000" => -- SUM
+                Result <= A + B;
+            when "001" => -- SUB
+                Result <= A - B;
+            when "010" => -- AND
+                Result <= A and B;
+            when "011" => -- OR
+                Result <= A or B;
+            when "100" => -- NOT
+                Result <= not A; -- Aplicando NOT na entrada A
+            when "101" => -- XOR
+                Result <= A xor B;
+            --when "110" => -- RIGHT SHIFT
+                --Result <= A srl 1; -- Deslocamento lógico à direita
+            --when "111" => -- LEFT SHIFT
+              --  Result <= A sll 1; -- Deslocamento lógico à esquerda
+            when others => 
+                Result <= (others => '0'); -- Caso padrão para operações indefinidas
+        end case;
+    end process;
+end Behavioral;

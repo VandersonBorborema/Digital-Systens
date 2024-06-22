@@ -1,0 +1,234 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+-- Componentes individuais
+entity Decoder is
+    Port (
+        input_vector : in  STD_LOGIC_VECTOR(15 downto 0);
+        opcode       : out STD_LOGIC_VECTOR(3 downto 0);
+        ra           : out STD_LOGIC_VECTOR(3 downto 0);
+        rb           : out STD_LOGIC_VECTOR(3 downto 0);
+        rc           : out STD_LOGIC_VECTOR(2 downto 0);
+        output_vector: out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end Decoder;
+
+architecture Behavioral of Decoder is
+begin
+    process(input_vector)
+    begin
+        opcode <= input_vector(15 downto 12);
+        ra     <= input_vector(11 downto 8);
+        rb     <= input_vector(7 downto 4);
+        rc     <= input_vector(3 downto 1);
+        output_vector <= "00000000" & input_vector(7 downto 0);
+    end process;
+end Behavioral;
+
+entity ControlUnit is
+    Port (
+        S : in  STD_LOGIC_VECTOR(3 downto 0);
+        Regdst : out STD_LOGIC;
+        Regwrite : out STD_LOGIC;
+        en_ALU : out STD_LOGIC;
+        opcode : out STD_LOGIC_VECTOR(2 downto 0)
+    );
+end ControlUnit;
+
+architecture Behavioral of ControlUnit is
+begin
+    process(S)
+    begin
+        Regdst <= S(3);
+        Regwrite <= S(3) and S(0);
+        en_ALU <= S(3);
+        opcode <= S(2 downto 0);
+    end process;
+end Behavioral;
+
+entity RegisterBank is
+    Port (
+        clk       : in  STD_LOGIC;
+        clear     : in  STD_LOGIC;
+        regWrite  : in  STD_LOGIC;                
+        ra        : in  STD_LOGIC_VECTOR(3 downto 0);
+        rb        : in  STD_LOGIC_VECTOR(3 downto 0);
+        rc        : in  STD_LOGIC_VECTOR(3 downto 0);
+        data_in   : in  STD_LOGIC_VECTOR(15 downto 0);
+        data_outA : out STD_LOGIC_VECTOR(15 downto 0);
+        data_outB : out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end RegisterBank;
+
+architecture Behavioral of RegisterBank is
+    type reg_array is array (0 to 15) of STD_LOGIC_VECTOR(15 downto 0);
+    signal registers : reg_array := (others => (others => '0'));
+begin
+
+    process(clk, clear)
+    begin
+        if clear = '1' then
+            registers <= (others => (others => '0'));
+        elsif rising_edge(clk) then
+            if regWrite = '1' then
+                registers(to_integer(unsigned(rc))) <= data_in;
+            end if;
+        end if;
+    end process;
+
+    data_outA <= registers(to_integer(unsigned(ra)));
+    data_outB <= registers(to_integer(unsigned(rb)));
+
+end Behavioral;
+
+entity ALU is
+    Port (
+        A : in  STD_LOGIC_VECTOR(15 downto 0);
+        B : in  STD_LOGIC_VECTOR(15 downto 0);
+        Op : in  STD_LOGIC_VECTOR(2 downto 0);
+        Result : out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end ALU;
+
+architecture Behavioral of ALU is
+begin
+    process(A, B, Op)
+    begin
+        case Op is
+            when "000" => -- SUM
+                Result <= A + B;
+            when "001" => -- SUB
+                Result <= A - B;
+            when "010" => -- AND
+                Result <= A and B;
+            when "011" => -- OR
+                Result <= A or B;
+            when "100" => -- NOT
+                Result <= not A; -- Applying NOT operation on A
+            when "101" => -- XOR
+                Result <= A xor B;
+            when "110" => -- RIGHT SHIFT
+                Result <= A srl 1; -- Logical right shift
+            when "111" => -- LEFT SHIFT
+                Result <= A sll 1; -- Logical left shift
+            when others => 
+                Result <= (others => '0'); -- Default case to handle undefined operations
+        end case;
+    end process;
+end Behavioral;
+
+-- Mux 2-1
+entity Mux2to1 is
+    Port (
+        sel : in  STD_LOGIC;
+        a : in  STD_LOGIC_VECTOR(15 downto 0);
+        b : in  STD_LOGIC_VECTOR(15 downto 0);
+        y : out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end Mux2to1;
+
+architecture Behavioral of Mux2to1 is
+begin
+    process(sel, a, b)
+    begin
+        if sel = '1' then
+            y <= a;
+        else
+            y <= b;
+        end if;
+    end process;
+end Behavioral;
+
+-- Sistema completo
+entity CompleteSystem is
+    Port (
+        clk       : in  STD_LOGIC;
+        clear     : in  STD_LOGIC;
+        input_vector : in  STD_LOGIC_VECTOR(15 downto 0);
+        data_out : out  STD_LOGIC_VECTOR(15 downto 0)
+    );
+end CompleteSystem;
+
+architecture Behavioral of CompleteSystem is
+    signal opcode, ra, rb : STD_LOGIC_VECTOR(3 downto 0);
+    signal rc : STD_LOGIC_VECTOR(2 downto 0);
+    signal output_vector : STD_LOGIC_VECTOR(15 downto 0);
+    signal Regdst, Regwrite, en_ALU : STD_LOGIC;
+    signal alu_opcode : STD_LOGIC_VECTOR(2 downto 0);
+    signal data_outA, data_outB, alu_result : STD_LOGIC_VECTOR(15 downto 0);
+    signal mux1_out, mux2_out : STD_LOGIC_VECTOR(15 downto 0);
+begin
+    -- Instanciando Decodificador
+    DECODER_INST : entity work.Decoder
+        Port map (
+            input_vector => input_vector,
+            opcode       => opcode,
+            ra           => ra,
+            rb           => rb,
+            rc           => rc,
+            output_vector => output_vector
+        );
+
+    -- Instanciando Unidade de Controle
+    CONTROL_UNIT_INST : entity work.ControlUnit
+        Port map (
+            S => opcode,
+            Regdst => Regdst,
+            Regwrite => Regwrite,
+            en_ALU => en_ALU,
+            opcode => alu_opcode
+        );
+
+    -- Instanciando Banco de Registradores
+    REGISTER_BANK_INST : entity work.RegisterBank
+        Port map (
+            clk => clk,
+            clear => clear,
+            regWrite => Regwrite,
+            ra => ra,
+            rb => rb,
+            rc => ra,  -- Conectando rc ao mux1_out no circuito
+            data_in => mux2_out,
+            data_outA => data_outA,
+            data_outB => data_outB
+        );
+
+    -- Instanciando ULA
+    ALU_INST : entity work.ALU
+        Port map (
+            A => data_outA,
+            B => data_outB,
+            Op => alu_opcode,
+            Result => alu_result
+        );
+
+    -- Instanciando Mux 2-1 para rc e ra
+    MUX1_INST : entity work.Mux2to1
+        Port map (
+            sel => Regdst,
+            a => rc & "0",  -- rc é 3 bits, então adicionamos um bit de 0
+            b => ra,
+            y => mux1_out
+        );
+
+    -- Instanciando Mux 2-1 para saída da ULA e data_outA
+    MUX2_INST : entity work.Mux2to1
+        Port map (
+            sel => en_ALU,
+            a => alu_result,
+            b => data_outA,
+            y => mux2_out
+        );
+
+    -- Instanciando Mux 2-1 final para saída do sistema
+    MUX3_INST : entity work.Mux2to1
+        Port map (
+            sel => Regdst,
+            a => output_vector,
+            b => mux2_out,
+            y => data_out
+        );
+
+end Behavioral;

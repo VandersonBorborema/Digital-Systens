@@ -1,0 +1,38 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity RegisterBank is
+    Port (
+        clk       : in  STD_LOGIC;
+        clear     : in  STD_LOGIC;
+        regWrite  : in  STD_LOGIC;
+        ra        : in  STD_LOGIC_VECTOR(3 downto 0);
+        rb        : in  STD_LOGIC_VECTOR(3 downto 0);
+        rc        : in  STD_LOGIC_VECTOR(3 downto 0);
+        data_in   : in  STD_LOGIC_VECTOR(15 downto 0);
+        data_outA : out STD_LOGIC_VECTOR(15 downto 0);
+        data_outB : out STD_LOGIC_VECTOR(15 downto 0)
+    );
+end RegisterBank;
+
+architecture Behavioral of RegisterBank is
+    type reg_array is array (0 to 15) of STD_LOGIC_VECTOR(15 downto 0);
+    signal registers : reg_array := (others => (others => '0'));
+begin
+    process(clk, clear)
+    begin
+        if clear = '1' then
+            registers <= (others => (others => '0'));
+        elsif rising_edge(clk) then
+            if regWrite = '1' then
+                registers(to_integer(IEEE.NUMERIC_STD.unsigned(rc))) <= data_in;
+            end if;
+        end if;
+    end process;
+
+    data_outA <= registers(to_integer(IEEE.NUMERIC_STD.unsigned(ra)));
+    data_outB <= registers(to_integer(IEEE.NUMERIC_STD.unsigned(rb)));
+end Behavioral;

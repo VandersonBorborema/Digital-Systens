@@ -1,0 +1,81 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.0sp3\processador16bits\simulation\qsim
+vprocessador16bits
+Z1 I0b^agQUa7^odnmle7QU__3
+Z2 VY>mX?z_X1AP:5BcJ^AUH10
+Z3 dC:\altera\13.0sp3\processador16bits\simulation\qsim
+Z4 w1719084884
+Z5 8processador16bits.vo
+Z6 Fprocessador16bits.vo
+L0 31
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 !s90 -work|work|processador16bits.vo|
+Z9 o-work work -O0
+!i10b 1
+Z10 !s100 5QNahW8Ni;`zWGS^oZn_>3
+!s85 0
+Z11 !s108 1719084886.022000
+Z12 !s107 processador16bits.vo|
+!s101 -O0
+vprocessador16bits_vlg_check_tst
+!i10b 1
+Z13 !s100 3m_0m;<<Ge78z;CA>9MdK2
+Z14 INijcKY2:z96ji0LIiCmmE1
+Z15 V0E2`SO^FKT<:>JXn:L=J20
+R3
+R4
+Z16 8processador16bits.vt
+Z17 Fprocessador16bits.vt
+L0 61
+R7
+r1
+!s85 0
+31
+Z18 !s108 1719084886.405000
+Z19 !s107 processador16bits.vt|
+Z20 !s90 -work|work|processador16bits.vt|
+!s101 -O0
+R9
+vprocessador16bits_vlg_sample_tst
+!i10b 1
+Z21 !s100 gWWn3JZXM9@_;<c[D;6Rg0
+Z22 ImK<HBJ[Zo24FB3Y=Zm3e90
+Z23 Vo`e0030PU7T@BHikR:F1M1
+R3
+R4
+R16
+R17
+L0 29
+R7
+r1
+!s85 0
+31
+R18
+R19
+R20
+!s101 -O0
+R9
+vprocessador16bits_vlg_vec_tst
+!i10b 1
+Z24 !s100 HH]RI3J^f<AgjzbFYl_bf3
+Z25 ImU^Uk^@i9Q[Ckk7>m39VK0
+Z26 V`kHZ<gSN40T6SKOBgzYJG3
+R3
+R4
+R16
+R17
+Z27 L0 425
+R7
+r1
+!s85 0
+31
+R18
+R19
+R20
+!s101 -O0
+R9
